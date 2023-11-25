@@ -1,0 +1,5 @@
+nltk==3.6.3
+Flask
+flask_cors
+pandas
+scikit-learn==1.2.2
