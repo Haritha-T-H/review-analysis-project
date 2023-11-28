@@ -46,6 +46,12 @@ def respond():
 
     data["positive"] = positive
     data["negative"] = negative
+    if positive > negative:
+        data["overall"] = "positive"
+    elif positive < negative:
+        data["overall"] = "negative"
+    else:
+        data["overall"] = "neutral"
 
     body["data"] = data
     return buildResponse(body)

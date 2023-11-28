@@ -7,6 +7,13 @@ import icon from './search.png'
 import boy from './boy.gif'
 import loader from './loading.gif'
 import search from './search.gif'
+import bg from './bg.png'
+import yes from './yes.png'
+import no from './no.png'
+import smile from './smile.png'
+import sad from './sad.png'
+import neutral from './neutral.png'
+
 import { BsDownload } from "react-icons/bs";
 
 function BackendAPI() {
@@ -15,6 +22,7 @@ function BackendAPI() {
 	const [loading, setLoading] = useState(false);
 	const [positive, setPositive] = useState('');
 	const [negative, setNegative] = useState('');
+	const [overall, setOverall] = useState('');
 
 
 	const handleSubmit = async (e) => {
@@ -26,6 +34,7 @@ function BackendAPI() {
 			console.log(data.data['positive']);
 			setPositive(data.data['positive']);
 			setNegative(data.data['negative']);
+			setOverall(data.data['overall']);
 			console.log('data.result:', data);
 
 		} catch (error) {
@@ -40,6 +49,9 @@ function BackendAPI() {
 
 	return (
 		<div className='container'>
+			<div className='heading'>
+				Review Sentiment Analysis
+			</div>
 			<div className='search-box-container'>
 
 				{/* <input
@@ -105,6 +117,8 @@ function BackendAPI() {
 						"Amazon Kindle Fire 5ft USB to Micro-USB Cable (works with most Micro-USB Tablets),,,\r\nAmazon Kindle Fire 5ft USB to Micro-USB Cable (works with most Micro-USB Tablets),,,",
 						"New Amazon Kindle Fire Hd 9w Powerfast Adapter Charger + Micro Usb Angle Cable,,,\r\nNew Amazon Kindle Fire Hd 9w Powerfast Adapter Charger + Micro Usb Angle Cable,,,",
 						"New Amazon Kindle Fire Hd 9w Powerfast Adapter Charger + Micro Usb Angle Cable,,,\r\n",
+						"Kindle Dx Leather Cover - Bad review device\r\n",
+						"Amazon Kindle Fire - Neutral review device\r\n",
 					].map((device, index) => (
 						<option key={index} value={device}>
 							{device}
@@ -113,7 +127,9 @@ function BackendAPI() {
 				</select>
 
 			</div>
-			<button onClick={handleSubmit} className='button'>Search Device</button>
+			<div className='button-wrap' id='coloroverride'>
+				<button onClick={handleSubmit} className='button' id='ana'>Analyse Product</button>
+			</div>
 			{loading ? <img src={loader} className='loading' alt="Logo" /> : null}
 
 			{/* {resultEng && !loading && (
@@ -127,18 +143,36 @@ function BackendAPI() {
 
 			{/* <img src={boy} className='boy' alt="Logo" /> */}
 			{positive && !loading && (
-				<div className='result-section'>
-					<div>
-						<div className='left-section' />
-						<h1>{positive}</h1>
-					</div>
-					<div>
-						<div className='right-section' />
-						<h1>{negative}</h1>
+				// <div className='result-section'>
+				// 	<div className='yespic'>
+				// 		{/* <div className='left-section' /> */}
+				// 		<h1>{positive}</h1>
+				// 	</div>
+				// 	<div>
+				// 		{/* <div className='right-section' /> */}
+				// 		<h1>{negative}</h1>
 
+				// 	</div>
+				// 	<h1>{overall}</h1>
+				// </div>
+				<div>
+
+					<div className='newcontainer'>
+						<div className='positivecontainer'>
+							<h1 className='one'>{positive}</h1>
+							<img className='yes' src={yes}></img>
+						</div>
+						<h1 className='two'>Reviews are {overall} {overall == 'neutral' && <img className='end' src={neutral} ></img>} {overall == 'positive' && <img className='end' src={smile} ></img>} {overall == 'negative' && <img className='end' src={sad} ></img>}  </h1>
+						<div className='positivecontainer'>
+							<h1 className='three'>{negative}</h1>
+							<img className='no' src={no}></img>
+
+						</div>
 					</div>
 				</div>
 			)}
+
+			{/* <img className='rev' src={bg}></img> */}
 
 		</div>
 	);
